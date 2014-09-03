@@ -55,12 +55,9 @@ function getcrosssection(filename)
     data
 end
 
-function interactionrate()
-    fluxfile = "fluxe2.csv"
-    crosssectionfile = "totalcrosssection_ccqe.csv"
+function interactionrate(fluxfile, crosssectionfile, num_targets)
     fluxes = getflux(fluxfile)
     css = getcrosssection(crosssectionfile)
-    N = 3e31
     W = 0.0
     for i in 1:size(fluxes, 1) - 1
         E = fluxes[:energy][i]
@@ -80,7 +77,7 @@ function interactionrate()
                 break
             end
         end
-        dW = flux * dE * 4pi * N * cs
+        dW = flux * dE * 4pi * num_targets * cs
         #println("$dW, $E, $dE, $cs")
         W += dW
     end
@@ -88,3 +85,25 @@ function interactionrate()
 end
 
 end
+
+using CrossSection
+using ArgParse
+
+settings = ArgParseSettings()
+@add_arg_table settings begin
+    "--flux-file", "-f"
+        help = "a CSV file with E [GeV], Phi*E^2 [m^-2 s^-1 sr^-1 GeV] pairs"
+        arg_type = String
+        default = "fluxe2.csv"
+    "--cross-section-file", "-c"
+        help = "a CSV file with Sigma [10^-39 cm^2], E [GeV] pairs"
+        arg_type = String
+        default = "totalcrosssection_ccqe.csv"
+    "--num-targets", "-n"
+        help = "the number of target particles present"
+        arg_type = Float64
+        default = 3e31
+end
+args = parse_args(settings)
+rate = interactionrate(args["flux-file"], args["cross-section-file"], args["num-targets"])
+println("$rate s^-1")
