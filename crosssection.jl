@@ -1,5 +1,6 @@
 # Unit conventions:
-# SI - kg + MeV
+# SI + MeV
+# use "natural" units for values, physical units for names.
 
 # Some constants
 const gevtomev = 1000
@@ -12,25 +13,7 @@ const mnpc2 = 1.29333217
 const f = 1.6857
 const taun = 880.
 
-# Calculate the cross section for an inverse beta decay, in m^2
-function crossSection(Enu)
-    prefactor_num = 2pi^2 * hbarc^3
-    prefactor_den = mmuc2^5 * f * taun
-    prefactor = prefactor_num/prefactor_den
-    result = prefactor * electronEnergy(Enu) * electronMomentum(Enu)
-end
-
-# Calculate the energy of an electron given the neutrino energy
-function electronEnergy(Enu)
-    Enu - mnpc2
-end
-
-# Calculate the momentum of an electron given the neutrino energy
-function electronMomentum(Enu)
-    sqrt(electronEnergy(Enu)^2 - mmuc2 * mmuc2)/c
-end
-
-# Calculate flux from flux * e^2
+# Parse 
 function csv2tuple(filename)
     open(filename) do f
         lines = readlines(f)
@@ -48,6 +31,7 @@ function csv2tuple(filename)
     end
 end
 
+# Calculate flux from flux * E^2
 function getflux(filename)
     data = csv2tuple(filename)
     for i in 1:length(data)
