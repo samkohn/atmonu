@@ -10,15 +10,6 @@ export interactionrate
 
 # Some constants
 const gevtomev = 1000
-const hbar = 6.582119e-22
-const c = 299792458.
-const hbarc = hbar * c
-const mec2 = 0.510998928
-const mmuc2 = 106
-const mnpc2 = 1.29333217
-const f = 1.6857
-const taun = 880.
-
 
 # Calculate flux from flux * E^2
 # Returns a DataFrame with columns :energy and :flux
