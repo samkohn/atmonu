@@ -76,7 +76,7 @@ function interactionrate()
     crosssectionfile = "totalcrosssection_ccqe.csv"
     fluxes = getflux(fluxfile)
     css = getcrosssection(crosssectionfile)
-    N = 2e33
+    N = 3e31
     W = 0.0
     for i in 1:length(fluxes)-1
         E, flux = fluxes[i]
