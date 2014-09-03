@@ -1,8 +1,8 @@
 module CrossSection
 
-using DataFrames
+import DataFrames.readtable
 
-export getflux, getcrosssection, interactionrate, divideBySquare
+export interactionrate
 
 # Unit conventions:
 # SI + MeV
